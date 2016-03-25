@@ -1,18 +1,20 @@
 @import 'reset';
 
 $primary-color: #333;
-$primary-font-color: black;
+$primary-font-color: #29293d;
 $error-color: red;
 $success-color: green;
 $alert-color: yellow;
 
 *{
-  font-family: Arial;
+  font-family: Tahoma;
 }
 body {
-  // background-image: url('/assets/background2.jpg');
+  background-image: url('/assets/redHeart.jpg');
   background-size: cover;
-  background-repeat: no-repeat; 
+  // min-width: 100%;
+  // min-height: 120%;
+  background-repeat: no-repeat;
 }
 
 
@@ -52,13 +54,14 @@ nav ul{
 }
 
 nav{
+  // background-color: #F0F8FF;
   background-color: rgba(0, 0, 0, 0.3);
   padding: 10px;
   color: $primary-font-color;
   height: 20px;
 }
 nav a{
- color: $primary-font-color; 
+ color: $primary-font-color;
 }
 .signin, .signin table{
   width: 400px;
