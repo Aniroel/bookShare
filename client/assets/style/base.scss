@@ -10,7 +10,7 @@ $alert-color: yellow;
   font-family: Tahoma;
 }
 body {
-  background-image: url('/assets/redHeart.jpg');
+  // background-image: url('/assets/redHeart.jpg');
   background-size: cover;
   // min-width: 100%;
   // min-height: 120%;
@@ -55,7 +55,7 @@ nav ul{
 
 nav{
   // background-color: #F0F8FF;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 10px;
   color: $primary-font-color;
   height: 20px;
@@ -73,6 +73,7 @@ nav a{
   color: $primary-font-color;
   border-radius: 5px;
   width: 700px;
+  padding-left: 50px auto;
   margin: 50px auto;
   padding: 20px;
 }
@@ -81,6 +82,10 @@ nav a{
 }
 .hero h1{
   font-size: 40px;
+
+.signin h1{
+  font-size: 15px;
+}
 
 }
 .book-entry{

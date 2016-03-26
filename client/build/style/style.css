@@ -6,7 +6,7 @@ ol {
   padding: 0; }
 
 * {
-  font-family: Arial; }
+  font-family: Tahoma; }
 
 body {
   background-size: cover;
@@ -39,13 +39,13 @@ nav ul {
   float: left; }
 
 nav {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 10px;
-  color: black;
+  color: #29293d;
   height: 20px; }
 
 nav a {
-  color: black; }
+  color: #29293d; }
 
 .signin, .signin table {
   width: 400px;
@@ -53,9 +53,10 @@ nav a {
 
 .hero {
   text-align: center;
-  color: black;
+  color: #29293d;
   border-radius: 5px;
   width: 700px;
+  padding-left: 50px auto;
   margin: 50px auto;
   padding: 20px; }
 
@@ -64,6 +65,8 @@ nav a {
 
 .hero h1 {
   font-size: 40px; }
+  .hero h1 .signin h1 {
+    font-size: 15px; }
 
 .book-entry {
   width: 250px;
