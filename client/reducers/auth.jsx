@@ -75,9 +75,11 @@ function startRegularSignUp(state){
 }
 
 function finishRegularSignUp(state, token){
+  console.log('FINISHING REGULAR SIGNUP');
   localStorage.setItem('token', res.token);
   hashHistory.push('/explore');
-  console.log('GOT RESPONSE, USER SIGNED UP')
+  console.log('GOT RESPONSE, USER SIGNED UP');
+  return state;
 }
 
 function regularSignUp(state){
@@ -117,8 +119,6 @@ export default function(state = Map(), action){
       return setPasswordConfirmation(state, action.password);
     case 'SET_EMAIL':
       return setEmail(state, action.email);
-    case 'REGULAR_LOGIN':
-      return regularLogin(state);
     case 'START_REGULAR_SIGNUP':
       return startRegularSignUp(state);
     case 'FINISH_REGULAR_SIGNUP':

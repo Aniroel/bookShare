@@ -23,9 +23,8 @@ module.exports.addUser = function(req, res){
     }).then(function(){
       var token = helper.encode(user);
       res.status(201).json({token: token});
-    });
-  })
-  .catch(function(err) {res.status(500).json(err);});
+    }).catch(function(err) {res.status(500).json(err);});
+  }).catch(function(err) {res.status(500).json({message: "User/Email already exists"});});
 };
 
 module.exports.facebookSignIn = function(req, res){
@@ -33,55 +32,57 @@ module.exports.facebookSignIn = function(req, res){
 };
 
 module.exports.findFriends = function(req, res){
-  console.log("findFriends" + req.params);
-  User.findAll({where: {
-    id: {
-      $ne: req.currentUser.id
-    },
-    $or: [
-      {
-        username: req.params.query
+  models.sequelize.query('select f.friendId from Friends as f where f.userId = ?',
+  { replacements: [req.currentUser.id.toString()], type: sequelize.QueryTypes.SELECT })
+  .then(function (friends) {
+    friends = friends.map(function(x) {return x.friendId;});
+    friends.push(req.currentUser.id);
+    User.findAll({where: {
+      id: {
+        $notIn: friends
       },
-      {
-        email: req.params.query
-      }
-    ]
-  }}).then(function(users){
-    users = users.map(function(user) {
-      return {
-        id: user.id,
-        name: user.username,
-        email: user.email
-      };
-    });
-    res.status(200).json(users);
-  })
-  .catch(function(err) {res.status(500).json(err);});
+      $or: [
+        {
+          username: req.params.query
+        },
+        {
+          email: req.params.query
+        }
+      ]
+    }}).then(function(users){
+      users = users.map(function(user) {
+        return {
+          id: user.id,
+          name: user.username,
+          email: user.email
+        };
+      });
+      res.status(200).json(users);
+    }).catch(function(err) {res.status(500).json(err);});
+  }).catch(function(err) {res.status(500).json(err);});
 };
 
 module.exports.getFriendRequests = function(req, res) {
   models.sequelize.query('SELECT u.id, u.username, u.email, fr.accepted,\
-  fr.id AS FriendRequestId FROM friendrequests as fr INNER\
-  JOIN users AS u ON fr.userId = u.id WHERE fr.friendId = ?',
+  fr.id AS FriendRequestId FROM FriendRequests as fr INNER\
+  JOIN Users AS u ON fr.userId = u.id WHERE fr.friendId = ?',
   { replacements: [req.currentUser.id.toString()], type: sequelize.QueryTypes.SELECT })
   .then(function (requests) {
-    console.log(requests);
     res.status(200).json(requests);
   }).catch(function(err) {res.status(500).json(err);});
 };
 
 module.exports.signIn = function(req, res){
-  console.log("right here ====> ", req.body.usernameOrEmail);
   User.findOne({where: {$or: [{email: req.body.usernameOrEmail}, {username: req.body.usernameOrEmail}]}} )
     .then(function(user){
-      if (!user){ res.status(404).end(); return;}
+      if (!user){ res.status(400).json({message: "Invalid username of email"}); return;}
       user.comparePassword(req.body.password)
       .then(function(isMatch) {
         if(isMatch){
           var token = helper.encode(user);
           res.status(200).json({token: token, username: user.username} );
         } else{
-          res.status(401).end(); return;
+          res.status(401).json({message: "Invaild password"}); return;
         }
       })
       .catch(function(err) {res.status(500).json(err);});
@@ -90,22 +91,26 @@ module.exports.signIn = function(req, res){
 };
 
 module.exports.addFriend = function(req, res){
-  console.log('REQ BODY IN ADD FRIEND:');
-  console.log(req.body);
   User.findAll({where: {email: req.body.email}})
     .then(function(users){
-      FriendRequest.create({ userId: req.currentUser.id, friendId: users[0].id, accepted: false })
-      .then(function(){
-        res.status(201).end();
+      FriendRequest.findOrCreate({where: {userId: req.currentUser.id, friendId: users[0].id},
+        defaults: {
+          userId: req.currentUser.id,
+          friendId: users[0].id,
+          accepted: false
+        }
       })
-      .catch(function(err) {res.status(500).json(err);});
-    })
-    .catch(function(err) {res.status(500).json(err);});
+      .then(function (result) {
+        if (result[1]){
+          res.status(201).json({message: "Friend request sent!"});
+        }
+        res.status(400).json({message: "Friend request already exists"});
+      }).catch(function(err) {res.status(500).json(err);});
+    }).catch(function(err) {res.status(500).json(err);});
 };
 
 module.exports.acceptFriendRequest = function(req, res) {
   var id = req.body.id;
-  console.log('ACCEPTING REQUEST WITH ID: ' + id);
   FriendRequest.findById(id)
   .then(function (friendRequest) {
     //req.currentUser.addFriend()

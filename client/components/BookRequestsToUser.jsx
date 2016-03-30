@@ -1,18 +1,22 @@
 import React from 'react';
 
-import {BookRequestListEntry} from './BookRequestListEntry';
+import {BookRequestListEntryContainer} from './BookRequestListEntry';
 
 export const BookRequestsToUser = class BookRequestsToUser extends React.Component{
   render(){
-    return <div>
-      <h2>Books your friends want to borrow</h2>
-      <ul class="request-list">
-      { 
-        this.props.bookRequests ? 
-        this.props.bookRequests.map((bookRequest) => {
-          return <BookRequestListEntry {...bookRequest}/>
-      }) : null}
-      </ul>
-    </div>
+    if(this.props.bookRequests && this.props.bookRequests.length > 0){
+      return <div className="book-requests">
+        <h3>Books your friends want to borrow</h3>
+        <ul className="requests-list">
+        {
+          this.props.bookRequests ?
+          this.props.bookRequests.map((bookRequest) => {
+            return <BookRequestListEntryContainer {...bookRequest}/>
+        }) : null}
+        </ul>
+      </div>
+    } else {
+      return <div></div>
+    }
   }
 }

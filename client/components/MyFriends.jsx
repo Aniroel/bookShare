@@ -3,8 +3,7 @@ import {connect} from 'react-redux';
 import * as actionCreators from '../action_creators';
 import DebounceInput from 'react-debounce-input';
 import PeopleList from './PeopleList';
-import {FriendRequestsContainer} from './FriendRequests';
-
+import BookList from './BookList';
 import Preloader from './Preloader';
 
 export const MyFriends = class MyFriends extends React.Component{
@@ -19,25 +18,26 @@ export const MyFriends = class MyFriends extends React.Component{
   }
   render(){
     return <div>
-      Your friends:
+      <h3>Friends</h3>
       {this.props.friends ? this.props.friends.map((friend) => {
-        return <li>
+        return <li onClick={ (event) => {this.props.viewFriendBooks(friend.id)} }>
           ID: {friend.id}  EMAIL: {friend.email}
         </li>
       }) : null}
-      <p>Search people and add them to your friends list:</p>
-      <DebounceInput debounceTimeout={200} type="text" placeholder="Type an email or username.." onChange={(event) => this.props.searchUsers(event.target.value)}/>
+      <h4>Find and add friends</h4>
+      <DebounceInput debounceTimeout={200} type="text" placeholder="Enter an email or username" onChange={(event) => this.props.searchUsers(event.target.value)}/>
       { this.props.loading ? <Preloader/> : null}
       <PeopleList peopleList={this.props.foundUsers}/>
-      <FriendRequestsContainer/>
+      <BookList books={this.props.selectedFriendBooks}/>
     </div>
   }
 }
 function mapStateToProps(state){
   return {
-    friends: state.dashboard.get('friends'),
-    foundUsers: state.dashboard.get('foundUsers'),
-    loading: state.dashboard.getIn(['loading', 'foundUsers'])
+    friends: state.friends.get('friends'),
+    foundUsers: state.friends.get('foundUsers'),
+    loading: state.friends.getIn(['loading', 'foundUsers']),
+    selectedFriendBooks: state.friends.get('selectedFriendBooks')
   }
 }
 

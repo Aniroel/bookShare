@@ -42,7 +42,7 @@ When writing any block of code that is logically subordinate to the line immedia
         }});
         ```
 
-    * use sublime's arrow collapsing as a guide. do the collapsing lines seem like they should be 'contained' by the line with an arrow on it?
+    * use your text editor's arrow collapsing as a guide. Do the collapsing lines seem like they should be 'contained' by the line with an arrow on it?
 
 
 ### Variable names
@@ -233,28 +233,6 @@ When writing any block of code that is logically subordinate to the line immedia
     else{
       otherResponse();
     }
-    ```
-
-
-
-### Working with files
-
-* Do not end a file with any character other than a newline.
-* Don't use the -a or -m flags for `git commit` for the first half of the class, since they conceal what is actually happening (and do slightly different things than most people expect).
-
-    ```shell
-    # good:
-    > git add .
-    > git commit
-    [save edits to the commit message file using the text editor that opens]
-
-    # bad:
-    > git commit -a
-    [save edits to the commit message file using the text editor that opens]
-
-    # bad:
-    > git add .
-    > git commit -m "updated algorithm"
     ```
 
 

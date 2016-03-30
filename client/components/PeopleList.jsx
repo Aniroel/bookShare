@@ -5,14 +5,20 @@ class PeopleList extends React.Component{
     super(props);
   }
   render(){
-  return <div class-name="people-list">
-    <h1>Found users with that query: </h1>
-    <li>
-    {this.props.peopleList ? 
-      this.props.peopleList.map((person) => <PeopleListEntryContainer {...person}/>) : 
-      null}
-    </li>
-  </div>  
+    if (!this.props.peopleList) {
+      return <div></div>;
+    } else if (this.props.peopleList.length === 0) {
+      return <div>
+        <h3>Not found, search again</h3>
+      </div>;
+    } else if (this.props.peopleList) {
+      return <div class-name="people-list">
+        <h3>Search results:</h3>
+        {this.props.peopleList ?
+          this.props.peopleList.map((person) => <PeopleListEntryContainer {...person}/>) :
+          null}
+      </div>;
+    }
   }
 }
 export default PeopleList;

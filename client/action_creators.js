@@ -1,15 +1,21 @@
 import {searchGoogleBooksAJAX} from './searchBooks';
 import {
-  asyncSignIn, 
-  getMyBooksAJAX, 
-  getMyFriendsAJAX, 
-  searchUsersAJAX, 
+  asyncSignIn,
+  getMyBooksAJAX,
+  getMyFriendsAJAX,
+  searchUsersAJAX,
   makeFriendRequestAsync,
   getMyFriendRequests,
   acceptFriendRequestAJAX,
   createBookRequestAJAX,
   getExploreBooksAJAX,
-  getBookRequestsToUserAJAX} from './helpers/serverCalls';
+  getBookRequestsToUserAJAX,
+  acceptBookRequestAJAX,
+  getBooksLentAJAX,
+  getBooksBorrowedAJAX,
+  declineFriendRequestAJAX,
+  getFriendBooksAJAX,
+  addBookToMyShelfAJAX} from './helpers/serverCalls';
 
 export function setState(state){
   return {
@@ -116,8 +122,7 @@ export function facebookLogin(){
   }
 }
 
-/* -------- DASHBOARD ACTIONS  -------- */
-
+/*------------MyLIBARY AND FRIENDS ACTIONS------------*/
 export function setFoundBooks(foundBooks){
   return {
     type: 'SET_FOUND_BOOKS',
@@ -213,7 +218,12 @@ export function finishGettingMyFriends(friends){
 
 /* Search for friends async actions */
 export function searchUsers(query){
+
   return function(dispatch){
+    if (query.length === 0) {
+      dispatch(finishSearchUsers(undefined));
+      return;
+    }
     console.log('Searching friends with query: ' + query);
     dispatch(startSearchUsers(query));
     return searchUsersAJAX(query,(response) => {
@@ -235,11 +245,16 @@ export function finishSearchUsers(users){
   }
 }
 
-/* addBookToMySheklf action */
+/* addBookToMyShelf action */
 export function addBookToMyShelf(book){
-  return {
-    type: 'ADD_BOOK_TO_SHELF',
-    book: book
+  return function(dispatch){
+    console.log('adding book ', book);
+    return addBookToMyShelfAJAX(book, (res) => {
+      console.log('ADDED BOOK');
+      console.log(res);
+      dispatch(getMyBooks());
+      console.log('GOT BOOKS');
+    });
   }
 }
 /* Search for books async actions  */
@@ -262,6 +277,10 @@ export function receiveBooks(books){
 
 export function fetchBooks(query){
   return function(dispatch){
+    if (query.length === 0) {
+      dispatch(receiveBooks([]));
+      return;
+    }
     dispatch(requestBooks(query));
     return searchGoogleBooksAJAX(query, (res) => {
       dispatch(receiveBooks(res));
@@ -277,7 +296,7 @@ export function acceptFriendRequest(friendRequestID){
     return acceptFriendRequestAJAX(friendRequestID, (response) => {
       console.log('Accepted friend request');
       console.log(response);
-      dispatch(finishAcceptFriendRequest());
+      dispatch(finishAcceptFriendRequest(friendRequestID));
     });
   }
 }
@@ -288,9 +307,10 @@ export function startAcceptFriendRequest(){
   }
 }
 
-export function finishAcceptFriendRequest(){
+export function finishAcceptFriendRequest(friendRequestId){
   return {
-    type: 'FINISH_ACCEPT_FRIEND_REQUEST'
+    type: 'FINISH_ACCEPT_FRIEND_REQUEST',
+    friendRequestId: friendRequestId
   }
 }
 
@@ -322,7 +342,7 @@ export function borrowBook(data){
 export function startGettingExploreBooks(){
   return {
     type: 'START_GETTING_EXPLORE_BOOKS'
-  } 
+  }
 }
 
 
@@ -348,7 +368,7 @@ export function getExploreBooks(){
 export function startGettingBookRequestsToUser(){
   return {
     type: 'START_GETTING_BOOK_REQUESTS_TO_USER'
-  } 
+  }
 }
 
 
@@ -368,5 +388,114 @@ export function getBookRequestsToUser(){
       console.log(bookRequests);
       dispatch(finishGettingBookRequestsToUser(bookRequests));
     });
+  }
+}
+
+/* Actions to accept book requests */
+export function startAcceptingBookRequest(){
+  return {
+    type: 'START_ACCEPTING_BOOK_REQUEST'
+  }
+}
+
+
+export function finishAcceptingBookRequest(){
+  return {
+    type: 'FINISH_ACCEPTING_BOOK_REQUEST'
+  }
+}
+
+export function acceptBookRequest(requestId){
+  return function(dispatch){
+    console.log('Starting to ACCEPT bookRequests');
+    dispatch(startAcceptingBookRequest());
+    return acceptBookRequestAJAX(requestId, (bookRequests) => {
+      console.log('ACCEPTED BOOK REQUEST');
+      console.log(bookRequests);
+      dispatch(finishAcceptingBookRequest(bookRequests));
+    });
+  }
+}
+
+/* Action to get books lent */
+export function startGettingBooksLent(){
+  return {
+    type: 'START_GETTING_BOOKS_LENT'
+  }
+}
+
+export function finishGettingBooksLent(books){
+  return {
+    type: 'FINISH_GETTING_BOOKS_LENT',
+    books: books
+  }
+}
+
+export function getBooksLent(){
+  return function(dispatch){
+    dispatch(startGettingBooksLent());
+    return getBooksLentAJAX((books) => {
+      console.log('GOT BOOKS LENT: ');
+      console.log(books);
+      dispatch(finishGettingBooksLent(books));
+    });
+  }
+}
+
+/* Action to get books borrowed */
+export function startGettingBooksBorrowed(){
+  return {
+    type: 'START_GETTING_BOOKS_BORROWED'
+  }
+}
+
+export function finishGettingBooksBorrowed(books){
+  return {
+    type: 'FINISH_GETTING_BOOKS_BORROWED',
+    books: books
+  }
+}
+
+export function getBooksBorrowed(){
+  return function(dispatch){
+    dispatch(startGettingBooksBorrowed());
+    return getBooksBorrowedAJAX((books) => {
+      console.log('GOT BOOKS BORROWED: ');
+      console.log(books);
+      dispatch(finishGettingBooksBorrowed(books));
+    });
+  }
+}
+
+/* Decline friend requests async functions */
+export function declineFriendRequest(friendRequestID){
+  return function(dispatch){
+    return declineFriendRequestAJAX(friendRequestID, (response) => {
+      console.log('SUCCESSFULLY DECLINED FRIEND REQUEST', friendRequestID);
+      dispatch(finishDeclineFriendRequest(friendRequestID));
+    });
+  }
+}
+
+export function finishDeclineFriendRequest(friendRequestId){
+  return {
+    type: 'FINISH_DECLINE_FRIEND_REQUEST',
+    friendRequestId: friendRequestId
+  }
+}
+
+/* View Friend's books actions */
+export function viewFriendBooks(friendId){
+  return function(dispatch){
+    return getFriendBooksAJAX(friendId, (response) => {
+      dispatch(finishGettingFriendBooks(response)); 
+    })
+  };
+}
+
+export function finishGettingFriendBooks(books){
+  return {
+    type: 'FINISH_GETTING_FRIEND_BOOKS',
+    books: books
   }
 }

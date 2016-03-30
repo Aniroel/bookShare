@@ -9,7 +9,7 @@ These are our actions that are created by our action_creators.js
 * **SET_STATE** - Sets
 * **REGULAR_LOGIN** - Sends the login information to the Server and logs in if password and username is correct
 * **REGULAR_SIGNUP** - Signs up the user with username/email and password
-* **FACEBOOK_LOGIN** - 
+* **FACEBOOK_LOGIN** -
 * **SET_USERNAME**
 * **SET_EMAIL**
 * **SET_PASSWORD**
@@ -38,15 +38,17 @@ _List means the immutable List Class_
         * email
         * password
         * passwordConfirmation
-  * dashboard
+  * myLibrary
     * myBooks (List)
-    * myFriends (List)
     * foundBooks (List)
-    * foundUsers (List)
     * loading
       * myBook (bool)
-      * myFriends (bool)
       * foundBooks (bool)
+  * friends
+    * myFriends (List)
+    * foundUsers (List)
+    * loading
+      * myFriends (bool)
       * foundUsers (bool)
   * explore
     * myFriendsBooks

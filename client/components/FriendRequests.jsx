@@ -10,30 +10,28 @@ export const FriendRequests = class FriendRequests extends React.Component{
     this.props.getFriendRequestsDoneToMe();
   }
   render(){
-    if(this.props.friendRequests){
-      console.log('friendrequests in view');
-      console.log(this.props.friendRequests);
+    if(this.props.friendRequests && this.props.friendRequests.length > 0){
+      return <div>
+        <h3>Friend Requests</h3>
+        { this.props.friendRequests ? this.props.friendRequests.map((friendRequest) => {
+          return <p>{friendRequest.username} wants to be your friend
+          <button onClick={(event) =>
+            { this.props.acceptFriendRequest(friendRequest.FriendRequestId);} 
+            }>Accept
+            </button><button onClick={(event) =>
+            { this.props.declineFriendRequest(friendRequest.FriendRequestId);}
+            }>Decline</button></p>;
+        }) : null}
+      </div>;
+    } else {
+      return <div></div>;
     }
-    return <div>
-      <h1>FriendRequests done to me:</h1>
-      { this.props.friendRequests ? this.props.friendRequests.map((friendRequest) => {
-        return <p>{friendRequest.username} wants to be your friend 
-        <button onClick={(event) => 
-          { console.log('Accepting request from: ' + 
-            friendRequest.username + 
-            'with FriendRequestID of ' + 
-            friendRequest.FriendRequestId);
-            this.props.acceptFriendRequest(friendRequest.FriendRequestId);
-        } }>Accept
-          </button></p>;
-      }) : null}
-    </div>;
   }
 }
 
 function mapStateToProps(state){
   return {
-    friendRequests: state.dashboard.get('friendRequests')
+    friendRequests: state.friends.get('friendRequests')
   }
 }
 

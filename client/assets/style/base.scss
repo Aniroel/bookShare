@@ -1,11 +1,24 @@
 @import 'reset';
+<<<<<<< HEAD
 
 $primary-color: #333;
 $primary-font-color: #29293d;
+=======
+@import url(https://fonts.googleapis.com/css?family=Lora:400,700);
+$search-input-color: #333;
+$primary-font-color: #cccccc;
+>>>>>>> test
 $error-color: red;
 $success-color: green;
 $alert-color: yellow;
+$input-width: 300px;
+$label-width: 100px;
+$segment: $input-width+$label-width+15px;
+$primary-font: 'Lora', Arial, serif;
+$secondary-font: Arial;
 
+
+<<<<<<< HEAD
 *{
   font-family: Tahoma;
 }
@@ -15,14 +28,110 @@ body {
   // min-width: 100%;
   // min-height: 120%;
   background-repeat: no-repeat;
+=======
+* {
+  font-family: $primary-font;
+  color: $primary-font-color;
+}
+html {
+  background: url('/assets/drawnLibrary.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+>>>>>>> test
 }
 
+/*Navigation Bar*/
+nav{
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  height: 20px;
 
+  li{
+    display: inline-block;
+    padding: 0 20px;
+  }
+  ul{
+    float: left;
+  }
+  .logout{
+    float: right;
+  }
+}
+/*
+nav{
+  background-color: #F0F8FF;
+}*/
+nav a{
+ text-decoration: none;
+ cursor: pointer;
+}
+
+/*FIXME: input goes to?*/
 input{
-  width: 400px;
+  width: 300px;
   padding: 5px;
   font-size: 16px;
+  color: $search-input-color;
 }
+
+/*Landing Page*/
+.signin,
+.signup {
+  form {
+    width: $segment;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+
+    div{
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    label{
+      display: inline-block;
+      font-weight: bold;
+      width: 100px;
+    }
+    .submitBtn {
+      text-align: center;
+      input{
+        display: inline-block;
+        width: 125px;
+        font-family: $secondary-font;
+
+      }
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.innerDiv{
+  padding: 30px;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.tab-bar{
+  width: $segment;
+  text-align: left;
+  margin: 20px auto 20px auto;
+}
+
+.tab {
+  display: inline-block;
+  padding: 0 20px;
+  .active {
+    font-weight: bold;
+    text-decoration: none;
+  }
+}
+
 
 .message{
   font-size: 14px;
@@ -45,6 +154,7 @@ input{
   color: $alert-color;
 }
 
+<<<<<<< HEAD
 nav li{
   display: inline-block;
   padding: 0 20px;
@@ -68,42 +178,64 @@ nav a{
   margin: 0 auto;
 }
 
+=======
+>>>>>>> test
 .hero{
   text-align: center;
-  color: $primary-font-color;
   border-radius: 5px;
   width: 700px;
   padding-left: 50px auto;
   margin: 50px auto;
   padding: 20px;
 }
-.hero h3, .hero h2{
-  margin: 10px;
-}
+
 .hero h1{
   font-size: 40px;
+<<<<<<< HEAD
 
 .signin h1{
   font-size: 15px;
 }
 
+=======
+>>>>>>> test
 }
+
 .book-entry{
   width: 250px;
-  box-shadow: 5px 5px 5px #888888;
+  box-shadow: 0px 3px 5px #888888;
   background: #F7F7F7;
   padding: 5px;
   margin: 7px;
   border-radius: 5px;
 }
+
 .book-entry img{
-  box-shadow: 5px 5px 5px #888888;
+  box-shadow: 0px 3px 5px #888888;
 }
+
 .book-list{
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
 }
+
 .my-books preloader{
   width: 40px;
 }
+
+.requests-list li{
+  width: 250px;
+}
+
+.requests-list{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.__react_component_tooltip > div {
+  max-width: 300px;
+  text-align: left;
+}
+

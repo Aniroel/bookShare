@@ -15,11 +15,13 @@ export const Explore = class Explore extends React.Component{
     this.props.getExploreBooks();
   }
   render(){
-    return <div className="explore">
+    return <div>
       <NavBarContainer/>
-      <h1>Welcome to Explore!</h1>
-      <SearchBar/>
-      <BookList books={this.props.books}/>
+      <div className="innerDiv">
+        <h3>Welcome to Explore!</h3>
+        <SearchBar/>
+        <BookList books={this.props.books}/>
+      </div>
     </div>;
   }
 }

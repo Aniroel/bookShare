@@ -1,90 +1,42 @@
-html,
-body,
-ul,
-ol {
-  margin: 0;
-  padding: 0; }
+/*
+Error: Invalid CSS after "...ary-color: #333": expected "{", was ";"
+        on line 4 of ./client/assets/style/base.scss
 
-* {
-  font-family: Tahoma; }
+1: @import 'reset';
+2: <<<<<<< HEAD
+3: 
+4: $primary-color: #333;
+5: $primary-font-color: #29293d;
+6: =======
+7: @import url(https://fonts.googleapis.com/css?family=Lora:400,700);
+8: $search-input-color: #333;
+9: $primary-font-color: #cccccc;
 
-body {
-  background-size: cover;
-  background-repeat: no-repeat; }
-
-input {
-  width: 400px;
-  padding: 5px;
-  font-size: 16px; }
-
-.message, .error, .success, .alert {
-  font-size: 14px;
-  margin: 0px;
-  padding: 0px; }
-
-.error {
-  color: red; }
-
-.success {
-  color: green; }
-
-.alert {
-  color: yellow; }
-
-nav li {
-  display: inline-block;
-  padding: 0 20px; }
-
-nav ul {
-  float: left; }
-
-nav {
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 10px;
-  color: #29293d;
-  height: 20px; }
-
-nav a {
-  color: #29293d; }
-
-.signin, .signin table {
-  width: 400px;
-  margin: 0 auto; }
-
-.hero {
-  text-align: center;
-  color: #29293d;
-  border-radius: 5px;
-  width: 700px;
-  padding-left: 50px auto;
-  margin: 50px auto;
-  padding: 20px; }
-
-.hero h3, .hero h2 {
-  margin: 10px; }
-
-.hero h1 {
-  font-size: 40px; }
-  .hero h1 .signin h1 {
-    font-size: 15px; }
-
-.book-entry {
-  width: 250px;
-  box-shadow: 5px 5px 5px #888888;
-  background: #F7F7F7;
-  padding: 5px;
-  margin: 7px;
-  border-radius: 5px; }
-
-.book-entry img {
-  box-shadow: 5px 5px 5px #888888; }
-
-.book-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start; }
-
-.my-books preloader {
-  width: 40px; }
-
-/*# sourceMappingURL=style.css.map */
+Backtrace:
+./client/assets/style/base.scss:4
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/scss/parser.rb:1179:in `expected'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/scss/parser.rb:1115:in `expected'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/scss/parser.rb:1110:in `tok!'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/scss/parser.rb:654:in `block'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/scss/parser.rb:647:in `ruleset'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/scss/parser.rb:673:in `block_child'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/scss/parser.rb:666:in `block_contents'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/scss/parser.rb:123:in `stylesheet'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/scss/parser.rb:39:in `parse'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/engine.rb:403:in `_to_tree'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/engine.rb:378:in `_render_with_sourcemap'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/engine.rb:295:in `render_with_sourcemap'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/exec/sass_scss.rb:414:in `run'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/exec/sass_scss.rb:63:in `process_result'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/exec/base.rb:52:in `parse'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/lib/sass/exec/base.rb:19:in `parse!'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/gems/sass-3.4.21/bin/sass:13:in `<top (required)>'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/bin/sass:23:in `load'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/bin/sass:23:in `<main>'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/bin/ruby_executable_hooks:15:in `eval'
+/Users/fabulousunicorn/.rvm/gems/ruby-2.2.1/bin/ruby_executable_hooks:15:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid CSS after \"...ary-color: #333\": expected \"{\", was \";\"\A         on line 4 of ./client/assets/style/base.scss\A \A 1: @import 'reset';\A 2: <<<<<<< HEAD\A 3: \A 4: $primary-color: #333;\A 5: $primary-font-color: #29293d;\A 6: =======\A 7: @import url(https://fonts.googleapis.com/css?family=Lora:400,700);\A 8: $search-input-color: #333;\A 9: $primary-font-color: #cccccc;"; }

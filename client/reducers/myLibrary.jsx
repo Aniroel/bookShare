@@ -10,16 +10,6 @@ function clearState(state){
   return Map();
 }
 
-function startGettingMyFriends(state){
-  //TODO start spinner
-  state.setIn(['loading','myFriends']);
-  return state;
-}
-
-function finishGettingMyFriends(state, friends){
-  return state.set('friends', friends);
-}
-
 function getMyBooks(state){
   return state.setIn(['loading', 'myBooks'], true);
 }
@@ -41,7 +31,7 @@ function formatBooksResponse(response){
       var info = response.items[i].volumeInfo;
       if(info){
         var identifiers = info.industryIdentifiers;
-        isbn10 = null, 
+        isbn10 = null,
         isbn13 = null;
         if(identifiers && identifiers[1] && identifiers[1].type === 'ISBN_10'){
           isbn10 = identifiers[1].identifier;
@@ -68,36 +58,6 @@ function formatBooksResponse(response){
   return books;
 }
 
-//TODO make this function async
-function addBookToMyShelf(state, book){
-  if(book.title === null || book.title === undefined) return;
-  var bookToSave = {
-    authors: book.authors,
-    categories: book.categories,
-    description: book.description,
-    isbn10: book.isbn10,
-    isbn13: book.isbn13,
-    image: book.image,
-    title: book.title,
-  }
-  $.ajax({
-    url: '/api/books',
-    method: 'POST',
-    data: bookToSave,
-    headers: {
-      authorization: localStorage.token
-    },
-    success: function(res){
-      console.log(res);
-      console.log('Sucessfully added book');
-    },
-    error: function(err){
-      console.error('Error saving book');
-      console.error(err);
-    }
-  });
-  return state;
-}
 
 function requestBooks(state, query){
   //TODO set message or spinner to show user that we are fetching the books
@@ -121,26 +81,6 @@ function setFoundBooks(state, foundBooks){
   return state.set('foundBooks', foundBooks);
 }
 
-
-function startSearchUsers(state, query){
-  if(isNullUndefinedOrEmpty(query)){
-    state = state.setIn(['loading', 'foundUsers'], false); 
-  } else {
-    state = state.setIn(['loading', 'foundUsers'], true); 
-  }
-  return state;
-}
-
-function finishSearchUsers(state, users){
-  state = state.setIn(['loading', 'foundUsers'], false);
-  return state.set('foundUsers', users);
-}
-
-function finishGettingFriendRequestToMe(state, friendRequests){
-  return state.set('friendRequests', friendRequests);
-}
-
-
 /* Make book request reducers  */
 function startBookRequest(state){
   //TODO Start spinner
@@ -158,7 +98,28 @@ function startGettingBookRequestsToUser(state){
 }
 
 function finishGettingBookRequestsToUser(state, bookRequests){
-  return state.setIn(['bookRequests','toUser'], bookRequests);
+  //TODO stop spinner
+  return state.setIn(['bookRequests', 'toUser'], bookRequests);
+}
+
+function startGettingBooksLent(state){
+  //TODO start spinner
+  return state;
+}
+
+function finishGettingBooksLent(state, books){
+  //TODO stop spinner
+  return state.set('booksLent', books);
+}
+
+function startGettingBooksBorrowed(state){
+  //TODO start spinner
+  return state;
+}
+
+function finishGettingBooksBorrowed(state, books){
+  //TODO stop spinner
+  return state.set('booksBorrowed', books);
 }
 
 export default function(state = Map(), action){
@@ -179,15 +140,7 @@ export default function(state = Map(), action){
       return getMyBooks(state);
     case 'FINISH_GET_MY_BOOKS':
       return finishGetMyBooks(state, action.books);
-    case 'FINISH_GET_MY_FRIENDS':
-      return finishGettingMyFriends(state, action.friends);
-    case 'START_SEARCH_USERS':
-      return startSearchUsers(state, action.query);
-    case 'FINISH_SEARCH_USERS':
-      return finishSearchUsers(state, action.users);
-    case 'FINISH_GETTING_FRIEND_REQUESTS_TO_ME':
-      return finishGettingFriendRequestToMe(state, action.friendRequests);
-    case 'START_BOOK_REQUEST':
+   case 'START_BOOK_REQUEST':
       return startBookRequest(state);
     case 'FINISH_BOOK_REQUEST':
       return finishBookRequest(state);
@@ -195,6 +148,14 @@ export default function(state = Map(), action){
       return startGettingBookRequestsToUser(state);
     case 'FINISH_GETTING_BOOK_REQUESTS_TO_USER':
       return finishGettingBookRequestsToUser(state, action.bookRequests);
+    case 'START_GETTING_BOOKS_LENT':
+      return startGettingBooksLent(state);
+    case 'FINISH_GETTING_BOOKS_LENT':
+      return finishGettingBooksLent(state, action.books);
+    case 'START_GETTING_BOOKS_BORROWED':
+      return startGettingBooksBorrowed(state);
+    case 'FINISH_GETTING_BOOKS_BORROWED':
+      return finishGettingBooksBorrowed(state, action.books);
     default:
       return setState(state);
   }

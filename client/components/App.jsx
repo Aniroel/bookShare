@@ -1,5 +1,6 @@
 import SignIn from './SignIn';
 import {NavBarContainer} from './NavBar';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +17,7 @@ class App extends React.Component {
         <NavBarContainer/>
         <div className="hero">
           <h1>Bookshare</h1>
-          <h2>Start sharing books with your friends!</h2>
+          <h2>Start sharing books with friends!</h2>
           {this.props.children}
         </div>
       </div>
