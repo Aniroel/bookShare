@@ -1,24 +1,24 @@
 @import 'reset';
 @import url(https://fonts.googleapis.com/css?family=Lora:400,700);
 $search-input-color: #333;
-// $primary-font-color: #343434;
-$primary-font-color: #d3d3d3;
-// $primary-font-color: black;
+$primary-font-color: black;
+
 $error-color: red;
 $success-color: green;
 $alert-color: yellow;
+
 $input-width: 300px;
 $label-width: 100px;
+
 $segment: $input-width+$label-width+15px;
 $primary-font: Arial, serif;
 $secondary-font: Arial;
+
 * {
   font-family: $primary-font;
   color: $primary-font-color;
 }
 html {
-  // background: url('/assets/lightLetter.jpg') no-repeat center center fixed;
-  // background: url('/assets/letters.jpg') no-repeat center center fixed;
   background: url('/assets/blueAbstract.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -221,11 +221,7 @@ li {
     display: block;
   }
 }
-/* SLICK addons */
-.slick-slider .slick-track, .slick-slider .slick-list {
-  background-color: rgba(210,210,210, 0.3);
-  border-radius: 3px;
-}
+
 .people img{
   border-radius: 50%;
 }

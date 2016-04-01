@@ -33,7 +33,7 @@ class About extends React.Component{
 
           <div>
               <a href="https://github.com/jblza">
-              <img src="./assets/kitty2.jpg" />
+              <img src="./assets/kittenGlasses.jpg" />
             </a>
               <p>Jonathan Blaising</p>
           </div>
